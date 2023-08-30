@@ -1,0 +1,17 @@
+1) Creamos APP rails: rails new nombre-proyecto --api
+    -Descomentar la Gema CORS
+
+2) Creamos Vite APP (Ract, VUEJs o Anngular)
+    - npm create vite@latest
+    - nombre proyecto pro defecto es client
+    - seleccionamos el framework y ....
+
+    - npm i dotenv
+    en client/.env.development
+
+    -
+
+
+3) Refactorizamos las rutas, usaremos /api/v1 routing
+
+4) creamos
