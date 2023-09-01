@@ -1,5 +1,6 @@
 1) Creamos APP rails: rails new nombre-proyecto --api
     -Descomentar la Gema CORS
+    - crear recurso: rails g resource Posts
 
 2) Creamos Vite APP (Ract, VUEJs o Anngular)
     - npm create vite@latest
@@ -9,9 +10,15 @@
     - npm i dotenv
     en client/.env.development
 
-    -
+    -src creamos carpeta components
+    -src creamos carpeta features -> otra posts
+
 
 
 3) Refactorizamos las rutas, usaremos /api/v1 routing
 
-4) creamos
+4) creamos un archivo constantes para importar los datos del archivo .env.development
+
+5) React router, para enrutas en una SPA
+    Retornaremos en un componente Router (App.jsx)
+    npm i react-router-dom
