@@ -1,8 +1,8 @@
 // API_URL para recueperar registros
 import React, { useState, useEffect } from "react";
 // Importar variables de entorno desde .env
-import { API_URL } from "../../constants";
 import { Link } from "react-router-dom";
+import { fetchAllPosts, deletePost } from "../../services/postService";
 
 function PostsList() {
   const [posts, setPosts] = useState([]);
@@ -15,37 +15,26 @@ function PostsList() {
   useEffect(() => {
     async function loadPosts() {
       try {
-        const resp = await fetch(API_URL);
-        if (resp.ok) {
-          const json = await resp.json();
-          setPosts(json);
-        } else {
-          throw resp;
-        }
+        const data = await fetchAllPosts();
+        setPosts(data);
+        setLoanding(false);
       } catch (e) {
-        setError("A ocurrido un error...");
-        console.log("A ocurrido un error:", e);
-      } finally {
+        setError(e);
         setLoanding(false);
       }
     }
     loadPosts();
   }, []);
 
-  const deletePost = async (id) => {
+  const deletePostHandler = async (id) => {
     try {
       // DELETE request to: http://localhost:3000/api/v1/posts/:id
-      const resp = await fetch(`${API_URL}/${id}`, {
-        method: "DELETE",
-      });
-
-      if (resp.ok) {
-        setPosts(posts.filter((post) => post.id !== id));
-      } else {
-        throw resp;
-      }
+      await deletePost(id);
+      setPosts(posts.filter((post) => post.id !== id));
+      // Opcioón 2
+      // setPosts((prevPost) => prevPost.filter((post) => posts.id !== id));
     } catch (e) {
-      console.log("Error: ", e);
+      console.log("Failer delete the post: ", e);
     }
   };
 
@@ -62,7 +51,7 @@ function PostsList() {
           <div className="post-links">
             <Link to={`/posts/${post.id}/edit`}>Edit</Link>
             {" | "}
-            <button onClick={() => deletePost(post.id)}>Delete </button>
+            <button onClick={() => deletePostHandler(post.id)}>Delete </button>
           </div>
         </div>
       ))}
